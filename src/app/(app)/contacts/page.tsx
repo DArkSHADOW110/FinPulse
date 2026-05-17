@@ -315,7 +315,7 @@ export default function ContactsPage() {
                         {typeLabels[c.contact_type]}
                       </span>
                     </div>
-                    <p className="text-xs text-text-tertiary mt-1 font-mono tracking-wider">
+                    <p className="text-xs text-text-tertiary mt-1 tracking-wider">
                       {c.account_number}
                     </p>
                     {(c.provider || c.bank_code) && (

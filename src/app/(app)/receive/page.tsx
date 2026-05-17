@@ -67,7 +67,7 @@ export default function ReceivePage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-xs text-text-tertiary uppercase tracking-wider">Account Number</p>
-                  <p className="font-mono font-medium text-text-primary mt-0.5 tracking-wider">{primary.account_number}</p>
+                  <p className="font-medium text-text-primary mt-0.5 tracking-wider">{primary.account_number}</p>
                 </div>
                 <Button 
                   variant="ghost" 

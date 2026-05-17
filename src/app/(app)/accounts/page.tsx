@@ -440,12 +440,12 @@ export default function AccountsPage() {
                       <p className="text-xs font-semibold uppercase tracking-widest text-text-tertiary">
                         Registration reference
                       </p>
-                      <p className="mt-1 font-mono text-sm text-text-primary">{registrationRef}</p>
+                      <p className="mt-1 text-sm text-text-primary">{registrationRef}</p>
                     </div>
                     <div>
                       <Label>OTP code</Label>
                       <Input
-                        className="mt-2 h-14 text-center font-mono text-2xl tracking-[0.5em]"
+                        className="mt-2 h-14 text-center text-2xl tracking-[0.5em]"
                         inputMode="numeric"
                         maxLength={6}
                         placeholder="••••••"
@@ -541,7 +541,7 @@ export default function AccountsPage() {
                       <p className="text-2xl font-bold text-primary tracking-tight">
                       {formatCurrency(Number(a.balance), "LKR")}
                       </p>
-                      <p className="mt-2 text-sm text-text-tertiary font-mono tracking-[0.1em]">
+                      <p className="mt-2 text-sm text-text-tertiary tracking-[0.1em]">
                         {accountMask(a)}
                       </p>
                     </div>

@@ -625,30 +625,45 @@ export function ActionHub() {
           Action Hub
         </span>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-3 max-[359px]:grid-cols-1">
         <button
           type="button"
           onClick={openSendModal}
-          className="group flex flex-col items-center justify-center gap-2 rounded-2xl border-none bg-gradient-to-br from-cyan-500 to-cyan-400 px-3 py-5 text-black shadow-lg transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] active:scale-[0.98]"
+          className="group relative flex flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-slate-300/25 bg-white px-3 py-5 text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.04)] outline-none transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-100 dark:shadow-none dark:hover:border-cyan-400/30 dark:hover:shadow-[0_0_25px_rgba(6,182,212,0.2)]"
         >
-          <Send className="h-6 w-6" />
-          <span className="text-xs font-bold uppercase tracking-wide">Send</span>
+          <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 transition-colors duration-300 group-hover:bg-cyan-100 dark:bg-cyan-500/10 dark:text-cyan-300 dark:group-hover:bg-cyan-500/20">
+            <Send className="h-5 w-5" />
+          </span>
+          <span className="text-[0.6875rem] font-bold uppercase tracking-[0.05em] text-slate-800 transition-colors duration-300 dark:text-slate-200">
+            Send
+          </span>
         </button>
         <button
           type="button"
           onClick={openReceiveModal}
-          className="group flex flex-col items-center justify-center gap-2 rounded-2xl border-none bg-gradient-to-br from-violet-500 to-violet-400 px-3 py-5 text-white shadow-lg transition-all hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] active:scale-[0.98]"
+          className="group relative flex flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-slate-300/25 bg-white px-3 py-5 text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.04)] outline-none transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-100 dark:shadow-none dark:hover:border-violet-400/30 dark:hover:shadow-[0_0_25px_rgba(139,92,246,0.2)]"
         >
-          <ArrowDownLeft className="h-6 w-6" />
-          <span className="text-xs font-bold uppercase tracking-wide">Receive</span>
+          <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-violet-500 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-50 text-violet-600 transition-colors duration-300 group-hover:bg-violet-100 dark:bg-violet-500/10 dark:text-violet-300 dark:group-hover:bg-violet-500/20">
+            <ArrowDownLeft className="h-5 w-5" />
+          </span>
+          <span className="text-[0.6875rem] font-bold uppercase tracking-[0.05em] text-slate-800 transition-colors duration-300 dark:text-slate-200">
+            Receive
+          </span>
         </button>
         <button
           type="button"
           onClick={openTopUpModal}
-          className="group flex flex-col items-center justify-center gap-2 rounded-2xl border-none bg-gradient-to-br from-emerald-500 to-emerald-400 px-3 py-5 text-black shadow-lg transition-all hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] active:scale-[0.98]"
+          className="group relative flex flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-slate-300/25 bg-white px-3 py-5 text-slate-900 shadow-[0_1px_3px_rgba(0,0,0,0.04)] outline-none transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-100 dark:shadow-none dark:hover:border-emerald-400/30 dark:hover:shadow-[0_0_25px_rgba(16,185,129,0.2)]"
         >
-          <Smartphone className="h-6 w-6" />
-          <span className="text-xs font-bold uppercase tracking-wide">Top-Up</span>
+          <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors duration-300 group-hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-300 dark:group-hover:bg-emerald-500/20">
+            <Smartphone className="h-5 w-5" />
+          </span>
+          <span className="text-[0.6875rem] font-bold uppercase tracking-[0.05em] text-slate-800 transition-colors duration-300 dark:text-slate-200">
+            Top-Up
+          </span>
         </button>
       </div>
 
@@ -794,7 +809,7 @@ export function ActionHub() {
               </div>
               <div className="text-center">
                 <p className="text-sm text-text-tertiary">{receiveAccount.account_name}</p>
-                <p className="mt-1 font-mono text-lg font-semibold tracking-wider text-text-primary">
+                <p className="mt-1 text-lg font-semibold tracking-wider text-text-primary">
                   {receiveAccount.account_number}
                 </p>
                 <p className="mt-1 text-xs capitalize text-text-tertiary">{receiveAccount.provider}</p>

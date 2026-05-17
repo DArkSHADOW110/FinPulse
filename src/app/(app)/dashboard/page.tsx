@@ -68,7 +68,7 @@ export default function DashboardPage() {
           {greeting}, {firstName}
         </h1>
         <p className="text-text-tertiary text-sm font-medium">
-          Suggestion: review your spending insights and upcoming payments from your dashboard.
+          Review your spending insights and upcoming payments from your dashboard.
         </p>
       </div>
 
@@ -152,7 +152,7 @@ export default function DashboardPage() {
                       {formatCurrency(Number(a.balance), "LKR")}
                     </p>
                     <p className="font-medium text-text-secondary text-sm mt-1">{a.account_name}</p>
-                    <p className="text-xs text-text-tertiary font-mono mt-0.5 tracking-[0.15em]">{a.account_number}</p>
+                    <p className="text-xs text-text-tertiary mt-0.5 tracking-[0.15em]">{a.account_number}</p>
                   </div>
                 </div>
               ))}

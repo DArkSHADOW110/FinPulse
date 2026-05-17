@@ -71,7 +71,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        mono: ["var(--font-jetbrains-mono)", "monospace"],
+        mono: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       boxShadow: {
         glow: "0 0 40px -10px var(--cyber-cyan-glow)",
