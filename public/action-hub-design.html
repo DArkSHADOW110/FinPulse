@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinPulse Action Hub - Redesigned</title>
+  <style>
+    /* ============================================
+       FONTS
+    ============================================ */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    /* ============================================
+       CSS VARIABLES - DESIGN TOKENS
+    ============================================ */
+    :root {
+      /* Core Backgrounds - Platinum Frost */
+      --background: #F8F9FA;
+      --background-gradient-from: #F8F9FA;
+      --background-gradient-via: #F3F4F6;
+      --background-gradient-to: #F8F9FA;
+      --background-mesh-1: rgba(8, 145, 178, 0.03);
+      --background-mesh-2: rgba(147, 51, 234, 0.02);
+
+      /* Cards */
+      --card: rgba(255, 255, 255, 0.7);
+      --card-border: rgba(0, 0, 0, 0.05);
+      --card-shadow: 0 8px 30px rgb(0 0 0 / 0.04);
+
+      /* Text */
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #64748b;
+
+      /* Borders */
+      --border: rgba(0, 0, 0, 0.06);
+
+      /* Accent Colors */
+      --cyan-50: #ecfeff;
+      --cyan-100: #cffafe;
+      --cyan-400: #22d3ee;
+      --cyan-500: #06b6d4;
+      --cyan-600: #0891b2;
+
+      --violet-50: #f5f3ff;
+      --violet-100: #ede9fe;
+      --violet-400: #a78bfa;
+      --violet-500: #8b5cf6;
+      --violet-600: #7c3aed;
+
+      --emerald-50: #ecfdf5;
+      --emerald-100: #d1fae5;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --emerald-600: #059669;
+
+      /* Glass effect */
+      --glass-blur: 24px;
+      --transition-luxury: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ============================================
+       DARK THEME
+    ============================================ */
+    .dark {
+      --background: #0a0d14;
+      --background-gradient-from: #0a0d14;
+      --background-gradient-via: #0d1220;
+      --background-gradient-to: #0a0d14;
+      --background-mesh-1: rgba(0, 229, 255, 0.05);
+      --background-mesh-2: rgba(139, 92, 246, 0.03);
+
+      --card: rgba(20, 27, 45, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+      --text-primary: #ffffff;
+      --text-secondary: #c8cdd6;
+      --text-tertiary: #8892a8;
+
+      --border: rgba(255, 255, 255, 0.06);
+    }
+
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      background-color: var(--background);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      color: var(--text-primary);
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 40%, var(--background-mesh-1) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 60%, var(--background-mesh-2) 0%, transparent 50%),
+        linear-gradient(
+          135deg,
+          var(--background-gradient-from) 0%,
+          var(--background-gradient-via) 50%,
+          var(--background-gradient-to) 100%
+        );
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      gap: 3rem;
+      transition: background 300ms var(--transition-luxury), color 300ms var(--transition-luxury);
+    }
+
+    /* ============================================
+       PAGE HEADER
+    ============================================ */
+    .page-header {
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      font-size: 0.875rem;
+      color: var(--text-tertiary);
+      max-width: 28rem;
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       THEME TOGGLE
+    ============================================ */
+    .theme-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      transition: all 300ms var(--transition-luxury);
+      z-index: 100;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--cyan-500);
+      transform: scale(1.05);
+    }
+
+    /* ============================================
+       GLASS CARD WRAPPER
+    ============================================ */
+    .glass-card {
+      position: relative;
+      border-radius: 1.5rem;
+      background: var(--card);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 420px;
+      transition: all 300ms var(--transition-luxury);
+    }
+
+    /* ============================================
+       ACTION HUB SECTION LABEL
+    ============================================ */
+    .section-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-tertiary);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    /* ============================================
+       ACTION BUTTONS GRID
+    ============================================ */
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 359px) {
+      .action-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ============================================
+       INDIVIDUAL ACTION BUTTON - BASE
+    ============================================ */
+    .action-btn {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.625rem;
+      border-radius: 1rem;
+      padding: 1.5rem 0.75rem;
+      cursor: pointer;
+      outline: none;
+      transition: all 300ms var(--transition-luxury);
+    }
+
+    /* --- Light Mode Base --- */
+    .action-btn {
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      color: var(--text-primary);
+    }
+
+    .action-btn:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .action-btn:active {
+      transform: scale(0.95);
+    }
+
+    .action-btn:focus-visible {
+      outline: 2px solid var(--cyan-500);
+      outline-offset: 2px;
+    }
+
+    /* --- Dark Mode Base --- */
+    .dark .action-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+    }
+
+    .dark .action-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* ============================================
+       TOP ACCENT LINE (Hidden, shows on hover)
+    ============================================ */
+    .action-btn .accent-line {
+      position: absolute;
+      inset: 0;
+      top: 0;
+      height: 2px;
+      border-radius: 1rem 1rem 0 0;
+      opacity: 0;
+      transition: opacity 300ms var(--transition-luxury);
+    }
+
+    .action-btn:hover .accent-line {
+      opacity: 1;
+    }
+
+    /* ============================================
+       ICON CONTAINER
+    ============================================ */
+    .icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      transition: all 300ms var(--transition-luxury);
+    }
+
+    .icon-wrap svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ============================================
+       BUTTON LABEL
+    ============================================ */
+    .action-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 300ms var(--transition-luxury);
+    }
+
+    /* Light */
+    .action-label {
+      color: #1e293b;
+    }
+    /* Dark */
+    .dark .action-label {
+      color: #e2e8f0;
+    }
+
+    /* ============================================
+       SEND BUTTON - CYAN THEME
+    ============================================ */
+    .action-btn--send .accent-line {
+      background: linear-gradient(to right, transparent, var(--cyan-500), transparent);
+    }
+
+    .action-btn--send .icon-wrap {
+      background: var(--cyan-50);
+      color: var(--cyan-600);
+    }
+
+    .action-btn--send:hover .icon-wrap {
+      background: var(--cyan-100);
+    }
+
+    .dark .action-btn--send:hover {
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.2);
+      border-color: rgba(6, 182, 212, 0.3);
+    }
+
+    .dark .action-btn--send .icon-wrap {
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--cyan-400);
+    }
+
+    .dark .action-btn--send:hover .icon-wrap {
+      background: rgba(6, 182, 212, 0.2);
+    }
+
+    .action-btn--send:focus-visible {
+      outline-color: rgba(6, 182, 212, 0.5);
+    }
+
+    /* ============================================
+       RECEIVE BUTTON - VIOLET THEME
+    ============================================ */
+    .action-btn--receive .accent-line {
+      background: linear-gradient(to right, transparent, var(--violet-500), transparent);
+    }
+
+    .action-btn--receive .icon-wrap {
+      background: var(--violet-50);
+      color: var(--violet-600);
+    }
+
+    .action-btn--receive:hover .icon-wrap {
+      background: var(--violet-100);
+    }
+
+    .dark .action-btn--receive:hover {
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.2);
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .dark .action-btn--receive .icon-wrap {
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--violet-400);
+    }
+
+    .dark .action-btn--receive:hover .icon-wrap {
+      background: rgba(139, 92, 246, 0.2);
+    }
+
+    .action-btn--receive:focus-visible {
+      outline-color: rgba(139, 92, 246, 0.5);
+    }
+
+    /* ============================================
+       TOP-UP BUTTON - EMERALD THEME
+    ============================================ */
+    .action-btn--topup .accent-line {
+      background: linear-gradient(to right, transparent, var(--emerald-500), transparent);
+    }
+
+    .action-btn--topup .icon-wrap {
+      background: var(--emerald-50);
+      color: var(--emerald-600);
+    }
+
+    .action-btn--topup:hover .icon-wrap {
+      background: var(--emerald-100);
+    }
+
+    .dark .action-btn--topup:hover {
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .dark .action-btn--topup .icon-wrap {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--emerald-400);
+    }
+
+    .dark .action-btn--topup:hover .icon-wrap {
+      background: rgba(16, 185, 129, 0.2);
+    }
+
+    .action-btn--topup:focus-visible {
+      outline-color: rgba(16, 185, 129, 0.5);
+    }
+
+    /* ============================================
+       BADGE
+    ============================================ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .badge--light {
+      background: rgba(8, 145, 178, 0.08);
+      color: var(--cyan-600);
+      border: 1px solid rgba(8, 145, 178, 0.15);
+    }
+
+    .dark .badge--light {
+      background: rgba(0, 229, 255, 0.1);
+      color: #67e8f9;
+      border-color: rgba(0, 229, 255, 0.2);
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan-500);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    .dark .badge-dot {
+      background: #00e5ff;
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ============================================
+       FOOTER NOTE
+    ============================================ */
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      max-width: 28rem;
+      line-height: 1.6;
+    }
+
+    .footer-note code {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Mono', monospace;
+      font-size: 0.6875rem;
+      padding: 0.125rem 0.375rem;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .dark .footer-note code {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       COMPARISON SECTION
+    ============================================ */
+    .comparison {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .comparison-row {
+      display: flex;
+      gap: 2rem;
+      width: 100%;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    @media (max-width: 680px) {
+      .comparison-row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    .comparison-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      text-align: center;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Old style buttons */
+    .old-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 1rem;
+      padding: 1.25rem 0.75rem;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 200ms ease;
+    }
+
+    .old-btn:active {
+      transform: scale(0.98);
+    }
+
+    .old-btn svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 2;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .old-btn span {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .old-btn--send {
+      background: linear-gradient(135deg, #06b6d4, #22d3ee);
+      color: #000000;
+      box-shadow: 0 4px 16px rgba(6, 182, 212, 0.35);
+    }
+
+    .old-btn--send:hover {
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+    }
+
+    .old-btn--receive {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+    }
+
+    .old-btn--receive:hover {
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+    }
+
+    .old-btn--topup {
+      background: linear-gradient(135deg, #10b981, #34d399);
+      color: #000000;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+    }
+
+    .old-btn--topup:hover {
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Arrow between old and new */
+    .arrow-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 680px) {
+      .arrow-divider {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" onclick="document.documentElement.classList.toggle('dark'); this.textContent = document.documentElement.classList.contains('dark') ? '&#9728;' : '&#9790;';" aria-label="Toggle dark mode">&#9790;</button>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>FinPulse Action Hub</h1>
+    <p>Premium glassmorphism redesign with themed accent colors, hover glow effects, and full light/dark mode support.</p>
+    <div style="margin-top: 0.75rem;">
+      <span class="badge badge--light">
+        <span class="badge-dot"></span>
+        Redesigned
+      </span>
+    </div>
+  </div>
+
+  <!-- ============================================
+       BEFORE / AFTER COMPARISON
+  ============================================ -->
+  <div class="comparison">
+
+    <div class="comparison-row">
+      <!-- OLD DESIGN -->
+      <div style="flex: 1; max-width: 420px; width: 100%;">
+        <p class="comparison-label" style="margin-bottom: 0.75rem;">Before (Flat Gradient)</p>
+        <div class="glass-card">
+          <span class="section-label">Action Hub</span>
+          <div class="action-grid">
+            <button class="old-btn old-btn--send" type="button">
+              <!-- Send icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+              <span>Send</span>
+            </button>
+            <button class="old-btn old-btn--receive" type="button">
+              <!-- Arrow Down Left icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7L7 17"/><path d="M17 17H7V7"/></svg>
+              <span>Receive</span>
+            </button>
+            <button class="old-btn old-btn--topup" type="button">
+              <!-- Smartphone icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+              <span>Top-Up</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="arrow-divider" aria-hidden="true">&#10140;</div>
+
+      <!-- NEW DESIGN -->
+      <div style="flex: 1; max-width: 420px; width: 100%;">
+        <p class="comparison-label" style="margin-bottom: 0.75rem;">After (Glassmorphism)</p>
+        <div class="glass-card">
+          <span class="section-label">Action Hub</span>
+          <div class="action-grid">
+
+            <!-- SEND BUTTON -->
+            <button class="action-btn action-btn--send" type="button">
+              <div class="accent-line"></div>
+              <div class="icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+              </div>
+              <span class="action-label">Send</span>
+            </button>
+
+            <!-- RECEIVE BUTTON -->
+            <button class="action-btn action-btn--receive" type="button">
+              <div class="accent-line"></div>
+              <div class="icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7L7 17"/><path d="M17 17H7V7"/></svg>
+              </div>
+              <span class="action-label">Receive</span>
+            </button>
+
+            <!-- TOP-UP BUTTON -->
+            <button class="action-btn action-btn--topup" type="button">
+              <div class="accent-line"></div>
+              <div class="icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+              </div>
+              <span class="action-label">Top-Up</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       STANDALONE FULL-SIZE NEW DESIGN
+  ============================================ -->
+  <div style="width: 100%; max-width: 420px;">
+    <p class="comparison-label" style="margin-bottom: 0.75rem;">Full-Size Preview</p>
+    <div class="glass-card">
+      <span class="section-label">Action Hub</span>
+      <div class="action-grid">
+
+        <!-- SEND -->
+        <button class="action-btn action-btn--send" type="button">
+          <div class="accent-line"></div>
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+          </div>
+          <span class="action-label">Send</span>
+        </button>
+
+        <!-- RECEIVE -->
+        <button class="action-btn action-btn--receive" type="button">
+          <div class="accent-line"></div>
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7L7 17"/><path d="M17 17H7V7"/></svg>
+          </div>
+          <span class="action-label">Receive</span>
+        </button>
+
+        <!-- TOP-UP -->
+        <button class="action-btn action-btn--topup" type="button">
+          <div class="accent-line"></div>
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+          </div>
+          <span class="action-label">Top-Up</span>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <p class="footer-note">
+    Toggle dark mode with the moon/sun button in the top-right corner. Hover over the new buttons to see the accent glow, lift animation, and gradient top-line reveal.
+  </p>
+
+</body>
+</html>
