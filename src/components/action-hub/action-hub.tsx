@@ -625,30 +625,88 @@ export function ActionHub() {
           Action Hub
         </span>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-3">
+        {/* Send Button - Cyan/Blue theme */}
         <button
           type="button"
           onClick={openSendModal}
-          className="group flex flex-col items-center justify-center gap-2 rounded-2xl border-none bg-gradient-to-br from-cyan-500 to-cyan-400 px-3 py-5 text-black shadow-lg transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] active:scale-[0.98]"
+          className={cn(
+            "group relative flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-6 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--card)]",
+            // Light mode
+            "bg-white border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 active:scale-95",
+            // Dark mode
+            "dark:bg-white/5 dark:border-white/10 dark:shadow-none dark:hover:shadow-[0_0_25px_rgba(6,182,212,0.2)] dark:hover:border-cyan-500/30 dark:active:scale-95"
+          )}
         >
-          <Send className="h-6 w-6" />
-          <span className="text-xs font-bold uppercase tracking-wide">Send</span>
+          {/* Subtle accent line - top */}
+          <div className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          {/* Icon container */}
+          <div className={cn(
+            "flex items-center justify-center rounded-xl p-2.5 transition-all duration-300",
+            "bg-cyan-50 text-cyan-600 group-hover:bg-cyan-100",
+            "dark:bg-cyan-500/10 dark:text-cyan-400 dark:group-hover:bg-cyan-500/20"
+          )}>
+            <Send className="h-5 w-5" />
+          </div>
+          <span className={cn(
+            "text-xs font-bold uppercase tracking-wide transition-colors duration-300",
+            "text-slate-800",
+            "dark:text-slate-200"
+          )}>Send</span>
         </button>
+
+        {/* Receive Button - Purple theme */}
         <button
           type="button"
           onClick={openReceiveModal}
-          className="group flex flex-col items-center justify-center gap-2 rounded-2xl border-none bg-gradient-to-br from-violet-500 to-violet-400 px-3 py-5 text-white shadow-lg transition-all hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] active:scale-[0.98]"
+          className={cn(
+            "group relative flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-6 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--card)]",
+            // Light mode
+            "bg-white border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 active:scale-95",
+            // Dark mode
+            "dark:bg-white/5 dark:border-white/10 dark:shadow-none dark:hover:shadow-[0_0_25px_rgba(139,92,246,0.2)] dark:hover:border-violet-500/30 dark:active:scale-95"
+          )}
         >
-          <ArrowDownLeft className="h-6 w-6" />
-          <span className="text-xs font-bold uppercase tracking-wide">Receive</span>
+          <div className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl bg-gradient-to-r from-transparent via-violet-500 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className={cn(
+            "flex items-center justify-center rounded-xl p-2.5 transition-all duration-300",
+            "bg-violet-50 text-violet-600 group-hover:bg-violet-100",
+            "dark:bg-violet-500/10 dark:text-violet-400 dark:group-hover:bg-violet-500/20"
+          )}>
+            <ArrowDownLeft className="h-5 w-5" />
+          </div>
+          <span className={cn(
+            "text-xs font-bold uppercase tracking-wide transition-colors duration-300",
+            "text-slate-800",
+            "dark:text-slate-200"
+          )}>Receive</span>
         </button>
+
+        {/* Top-Up Button - Emerald/Green theme */}
         <button
           type="button"
           onClick={openTopUpModal}
-          className="group flex flex-col items-center justify-center gap-2 rounded-2xl border-none bg-gradient-to-br from-emerald-500 to-emerald-400 px-3 py-5 text-black shadow-lg transition-all hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] active:scale-[0.98]"
+          className={cn(
+            "group relative flex flex-col items-center justify-center gap-2.5 rounded-2xl px-3 py-6 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--card)]",
+            // Light mode
+            "bg-white border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 active:scale-95",
+            // Dark mode
+            "dark:bg-white/5 dark:border-white/10 dark:shadow-none dark:hover:shadow-[0_0_25px_rgba(16,185,129,0.2)] dark:hover:border-emerald-500/30 dark:active:scale-95"
+          )}
         >
-          <Smartphone className="h-6 w-6" />
-          <span className="text-xs font-bold uppercase tracking-wide">Top-Up</span>
+          <div className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className={cn(
+            "flex items-center justify-center rounded-xl p-2.5 transition-all duration-300",
+            "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100",
+            "dark:bg-emerald-500/10 dark:text-emerald-400 dark:group-hover:bg-emerald-500/20"
+          )}>
+            <Smartphone className="h-5 w-5" />
+          </div>
+          <span className={cn(
+            "text-xs font-bold uppercase tracking-wide transition-colors duration-300",
+            "text-slate-800",
+            "dark:text-slate-200"
+          )}>Top-Up</span>
         </button>
       </div>
 
